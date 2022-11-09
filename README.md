@@ -24,6 +24,9 @@
 - 해당 직무 과정에 대한 수요율과 각 기업의 기본적인 정보를 활용할 수 있는 데이터 파이프라인 설계
 
 # 프로젝트 구현에 필요한 기술
+![dp-how-dp-works-v2](https://user-images.githubusercontent.com/71915270/200960341-4990e1c9-325b-4a97-8a88-1b176d714f3a.png)
+![0_Ho1JQ6jQkpzsCoR-](https://user-images.githubusercontent.com/71915270/200960368-5f66222d-3136-4b92-9847-e57e226bace6.png)
+
 - Apache Airflow
 - MySql
 - AWS S3및 기본적인 데이터 웨어하우스 
