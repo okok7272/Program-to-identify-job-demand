@@ -19,27 +19,27 @@
 
 - 데이터 엔지니어로 기본적인 직무로 할 수 있는 데이터 파이프라인 구축
 
-#프로젝트 목적
+# 프로젝트 목적
 
 - 해당 직무 과정에 대한 수요율과 각 기업의 기본적인 정보를 활용할 수 있는 데이터 파이프라인 설계
 
-#프로젝트 구현에 필요한 기술
+# 프로젝트 구현에 필요한 기술
 - Apache Airflow
 - MySql
 - AWS S3및 기본적인 데이터 웨어하우스 
 - BI 기술 확인
 
-#데이터 수집
+# 데이터 수집
 - Crawling(잡코리아, 추가적으로 다른 부트캠프 자료도 수집할 예정)
 - Worknet API
 
-#DataBase(현재 진행단계)
+# DataBase(현재 진행단계)
 - MySQL
 
-#BI
+# BI
 - Tableau
 
-#Data Warehouse
+# Data Warehouse
 - AWS S3 및 EC2 
 
 
