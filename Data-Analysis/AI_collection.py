@@ -24,8 +24,6 @@ def page_number(keyword, page_num):
     real_num = int(trans_num)
     return real_num
 
-print(page_number('AI', 1))
-
 def crawl(keyword, page_num):
     keyword = urllib.parse.quote(keyword)
     url = base_url.format(keyword,page_num)
@@ -46,6 +44,26 @@ def crawl(keyword, page_num):
     datetime = [element.text for element in soup.select("div.post-list-info > p.option > span.date")][:19]
     detail = [element.text for element in soup.select("div.post-list-info > a.title")][:19]
     detail = [element.replace("\n","").replace("\r","") for element in detail]
-    df = pd.DataFrame({'기업 이름' : name, '경력' : personal_history ,'자세 내용' : detail})
+    df = pd.DataFrame({'회사명' : name, '채용제목' : detail, '근무지역' : location, '최소학력' : edu, '근무형태' : employment_type ,'경력' : personal_history , '모집기간' : datetime})
     return df
 
+#해당 함수 구조
+            # "회사명":COMPANY,
+            # "체용제목":TITLE,
+            # "임금형태":SAL_TMNM,
+            # "급여":SAL,
+            # "근무지역":REGION,
+            # "근무형태":HOLIDAY_TPNM,
+            # "최소학력":MIN_DEUBG,
+            # "경력":CAREER,
+#해당 구조와 비슷하게 데이터 받기 
+
+AI_df = pd.DataFrame(columns=['회사명', '채용제목', '근무지역', '최소학력', '근무형태', '경력', '모집기간'])
+
+def auto_crawling(keyword):
+    page_num = page_number(keyword, 1)
+    for i in range(page_num):
+        temp_df = crawl(keyword, i)
+        AI_df.append(temp_df,sort=False, ignore_index = True)
+
+auto_crawling('AI')
