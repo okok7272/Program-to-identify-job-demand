@@ -1,7 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-
+import sqlalchemy
+from sqlalchemy import create_engine
+import psycopg2
+import os
+import re
+import time
+import urllib
+from urllib.request import Request, urlopen
+# engine = sqlalchemy.create_engine("postgresql://user:password@host:port/database")
 
 #url 잘게 자르기
 url = "http://openapi.work.go.kr/opi/opi/opia/wantedApi.do"
@@ -48,9 +56,9 @@ def parse():
         }
  
 #parsing 하기
-result = requests.get(url+serviceKey+Calltp+Return+StartPage+Display+OCCUPATION+Region)
-soup = BeautifulSoup(result.text,'lxml-xml')
-wanteds = soup.find_all("wanted")
+    result = requests.get(url+serviceKey+Calltp+Return+StartPage+Display+OCCUPATION+Region)
+    soup = BeautifulSoup(result.text,'lxml-xml')
+    wanteds = soup.find_all("wanted")
  
 row = []
 for wanted in wanteds:
@@ -59,4 +67,8 @@ for wanted in wanteds:
 #pandas 데이터프레임에 넣기
 df = pd.DataFrame(row)
 
-df.to_csv("서울_성남_개발자_채용정보_6.csv",mode='w',encoding='utf-8')
+con = psycopg2.connect(host='localhost', dbname='worknet',user='postgres',password='1234',port=5432)
+engine = create_engine("postgresql+psycopg2://postgres:1234@localhost:5432/worknet")
+df.to_sql('worknet',if_exists = 'append', con = engine)
+con.commit()
+#df.to_csv("서울_성남_개발자_채용정보_6.csv",mode='w',encoding='utf-8')

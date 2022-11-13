@@ -5,7 +5,7 @@ import pandas as pd
 import re
 #회사 수에 따라 페이지 수 설정 때문에 필요
 #first_url = 'https://www.jobkorea.co.kr/Search/?stext=AI&tabType=recruit&Page_No=1'
-
+import time
 page_order = 1
 
 #content > div > div > div.cnt-list-wrap > div > div.recruit-info > div.list-filter-wrap > p > strong
@@ -64,6 +64,8 @@ def auto_crawling(keyword):
     page_num = page_number(keyword, 1)
     for i in range(page_num):
         temp_df = crawl(keyword, i)
+        #페이지 켜지는 시간 넣기 sleep으로
+        time.sleep(4)
         AI_df.append(temp_df,sort=False, ignore_index = True)
 
 auto_crawling('AI')
