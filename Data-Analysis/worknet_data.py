@@ -20,7 +20,7 @@ Return = "&returnType=XML"
 StartPage="&startPage=6"
 Display = "&display=100"
 OCCUPATION = "&occupation=023|024|025"
-Region = "&region=11000|41130"
+#Region = "&region=11000|41130"
 
 #항목 parsing 함수작성하기
 def parse():
@@ -35,7 +35,7 @@ def parse():
         CAREER = wanted.find("career").get_text()
         return {
             "회사명":COMPANY,
-            "체용제목":TITLE,
+            "채용제목":TITLE,
             "임금형태":SAL_TMNM,
             "급여":SAL,
             "근무지역":REGION,
@@ -46,7 +46,7 @@ def parse():
     except AttributeError as e:
         return {
             "회사명":None,
-            "체용제목":None,
+            "채용제목":None,
             "임금형태":None,
             "급여":None,
             "근무지역":None,
@@ -56,9 +56,9 @@ def parse():
         }
  
 #parsing 하기
-    result = requests.get(url+serviceKey+Calltp+Return+StartPage+Display+OCCUPATION+Region)
-    soup = BeautifulSoup(result.text,'lxml-xml')
-    wanteds = soup.find_all("wanted")
+result = requests.get(url+serviceKey+Calltp+Return+StartPage+Display+OCCUPATION)
+soup = BeautifulSoup(result.text,'lxml-xml')
+wanteds = soup.find_all("wanted")
  
 row = []
 for wanted in wanteds:
@@ -67,8 +67,8 @@ for wanted in wanteds:
 #pandas 데이터프레임에 넣기
 df = pd.DataFrame(row)
 
-con = psycopg2.connect(host='localhost', dbname='worknet',user='postgres',password='1234',port=5432)
-engine = create_engine("postgresql+psycopg2://postgres:1234@localhost:5432/worknet")
+engine = create_engine("postgresql://postgres:1234@localhost:5432/jobsearch")
+conn = engine.connect()
 df.to_sql('worknet',if_exists = 'append', con = engine)
-con.commit()
+conn.close()
 #df.to_csv("서울_성남_개발자_채용정보_6.csv",mode='w',encoding='utf-8')
